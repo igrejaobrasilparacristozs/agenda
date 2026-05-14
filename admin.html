@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin - Agenda Igreja</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body { background: #f0f2f5; padding: 12px; }
@@ -25,7 +26,7 @@
       gap: 15px;
     }
 .logo-igreja {
-      width: 50px;
+      width: 150px !important;
       height: 50px;
       background: #1a73e8;
       border-radius: 50%;
@@ -70,7 +71,7 @@
       white-space: nowrap;
     }
 .btn:hover { background: #1557b0; }
-.btn-danger { background: #ea4335; padding: 8px 14px; font-size: 14px; } /* VERMELHO CLARO E MENOR */
+.btn-danger { background: #ea4335; padding: 8px 14px; font-size: 14px; }
 .btn-danger:hover { background: #d33426; }
 .btn-secondary { background: #5f6368; }
 .btn-secondary:hover { background: #494c50; }
@@ -154,12 +155,6 @@
 .form-label { font-size: 14px; color: #5f6368; margin-bottom: 4px; display: block; }
 
     /* ESTILO DO PDF */
-    @media print {
-      body * { visibility: hidden; }
-      #pdf-area, #pdf-area * { visibility: visible; }
-      #pdf-area { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; }
-     .no-print { display: none!important; }
-    }
 .pdf-container {
       max-width: 800px;
       margin: 0 auto;
@@ -295,7 +290,7 @@
     <!-- PAINEL ADMIN -->
     <div id="painel" class="hidden">
       <div class="header-top">
-        <div class="logo-igreja">⛪</div>
+         <img src="logo.png" alt="Logo" class="logo-igreja" style="background: none; border-radius: 8px;">
         <h1>Painel da Agenda</h1>
         <button class="btn btn-danger btn-sair" onclick="sair()">🚪 Sair</button>
       </div>
@@ -419,6 +414,7 @@
     window.gerarPDF = () => {
       const cores = ['pdf-card-verde', 'pdf-card-azul', 'pdf-card-amarelo'];
       const mesAtual = dataAtual.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+      const nomeArquivo = `programacao-${mesAtual.replace(' ', '-').toLowerCase()}.pdf`;
 
       let htmlPDF = `
         <div class="pdf-container">
@@ -456,10 +452,17 @@
       pdfArea.innerHTML = htmlPDF;
       pdfArea.style.display = 'block';
 
-      setTimeout(() => {
-        window.print();
+      const opt = {
+        margin: [10, 10, 10, 10],
+        filename: nomeArquivo,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(pdfArea).save().then(() => {
         pdfArea.style.display = 'none';
-      }, 250);
+      });
     };
 
     async function carregarCalendario() {
