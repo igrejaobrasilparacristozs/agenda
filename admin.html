@@ -26,7 +26,7 @@
       gap: 15px;
     }
 .logo-igreja {
-      width: 150px !important;
+      width: 150px!important;
       height: 50px;
       background: #1a73e8;
       border-radius: 50%;
@@ -118,10 +118,26 @@
     }
 .dia.hoje { background: #fef7e0; border-color: #f9ab00; }
 .dia.outro-mes { background: #f8f9fa; color: #80868b; }
+.badge {
+      background: #1a73e8;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-size: 10px;
+      margin-left: 4px;
+    }
 .form-evento { background: #f8f9fa; padding: 16px; border-radius: 8px; margin: 20px 0; }
-.form-evento input,.form-evento textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+.form-evento input,.form-evento textarea,.form-evento select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
 .form-row { display: flex; gap: 10px; flex-direction: column; }
 .lista-eventos { margin-top: 30px; }
+.titulo-mes-lista {
+      color: #1a73e8;
+      margin: 20px 0 10px 0;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+      border-bottom: 2px solid #e8f0fe;
+      padding-bottom: 5px;
+ }
 .evento-item {
       background: #f8f9fa;
       padding: 15px;
@@ -154,60 +170,77 @@
 .modal-btns button { flex: 1; }
 .form-label { font-size: 14px; color: #5f6368; margin-bottom: 4px; display: block; }
 
-    /* ESTILO DO PDF */
+    /* ESTILO DO PDF - GRADE 3 COLUNAS */
 .pdf-container {
       max-width: 800px;
       margin: 0 auto;
       font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
     }
 .pdf-header {
       text-align: center;
-      margin-bottom: 30px;
-      padding-bottom: 20px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
       border-bottom: 3px solid #1a73e8;
     }
 .pdf-logo {
-      width: 269px;
-      height: 114px;
-      margin: 0 auto 15px;
+      width: 200px;
+      height: 85px;
+      margin: 0 auto 10px;
     }
 .pdf-titulo {
       color: #202124;
-      font-size: 28px;
-      margin: 10px 0 5px;
+      font-size: 24px;
+      margin: 8px 0 4px;
     }
 .pdf-subtitulo {
       color: #5f6368;
-      font-size: 18px;
+      font-size: 16px;
       text-transform: capitalize;
     }
+.pdf-mes-titulo {
+      color: #1a73e8;
+      font-size: 18px;
+      margin: 20px 0 12px 0;
+      text-transform: uppercase;
+      border-bottom: 2px solid #e8f0fe;
+      padding-bottom: 6px;
+      page-break-before: auto;
+ }
+.pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 15px;
+ }
 .pdf-card {
-      border-radius: 12px;
-      padding: 20px;
-      margin: 15px 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
       page-break-inside: avoid;
+      min-height: 110px;
     }
-.pdf-card-verde { background: #e6f4ea; border-left: 5px solid #34a853; }
-.pdf-card-azul { background: #e8f0fe; border-left: 5px solid #1a73e8; }
-.pdf-card-amarelo { background: #fef7e0; border-left: 5px solid #f9ab00; }
+.pdf-card-verde { background: #e6f4ea; border-left: 4px solid #34a853; }
+.pdf-card-azul { background: #e8f0fe; border-left: 4px solid #1a73e8; }
+.pdf-card-amarelo { background: #fef7e0; border-left: 4px solid #f9ab00; }
 .pdf-card-data {
       color: #202124;
-      font-size: 16px;
+      font-size: 11px;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       text-transform: capitalize;
     }
 .pdf-card-titulo {
       color: #202124;
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
+      line-height: 1.2;
     }
 .pdf-card-desc {
       color: #3c4043;
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 11px;
+      line-height: 1.3;
     }
 
     /* RESPONSIVO TABLET+ */
@@ -298,7 +331,7 @@
       <div class="acoes-admin">
         <button class="btn btn-success" onclick="scrollToForm()">➕ Evento</button>
         <button class="btn btn-outline" onclick="abrirComoMembro()">👁️ Membro</button>
-        <button class="btn btn-pdf" onclick="gerarPDF()">📄 PDF</button>
+        <button class="btn btn-pdf" onclick="gerarPDF()">📄 GERAR PDF</button>
       </div>
 
       <div class="nav-mes">
@@ -313,14 +346,15 @@
         <h3>Cadastrar Novo Evento</h3>
         <div class="form-row">
           <input type="date" id="data" required>
-          <input type="text" id="titulo" placeholder="Título do evento" required>
+          <input type="time" id="horario" placeholder="Horário">
         </div>
+        <input type="text" id="titulo" placeholder="Título do evento" required>
         <textarea id="descricao" placeholder="Descrição" rows="2"></textarea>
         <button class="btn btn-success" onclick="salvarEvento()">➕ Cadastrar Evento</button>
       </div>
 
       <div class="lista-eventos">
-        <h3>Eventos do Mês</h3>
+        <h3>📋 Próximos Eventos</h3>
         <div id="lista-eventos-mes"></div>
       </div>
     </div>
@@ -336,8 +370,11 @@
       <h2>Gerenciar Evento</h2>
       <div class="form-evento" style="background: white; padding: 0;">
         <input type="hidden" id="edit-data-original">
+        <input type="hidden" id="edit-index">
         <label class="form-label">Data do evento:</label>
         <input type="date" id="edit-data" required>
+        <label class="form-label">Horário:</label>
+        <input type="time" id="edit-horario">
         <label class="form-label">Título:</label>
         <input type="text" id="edit-titulo" placeholder="Título do evento" required>
         <label class="form-label">Descrição:</label>
@@ -413,37 +450,62 @@
 
     window.gerarPDF = () => {
       const cores = ['pdf-card-verde', 'pdf-card-azul', 'pdf-card-amarelo'];
-      const mesAtual = dataAtual.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
-      const nomeArquivo = `programacao-${mesAtual.replace(' ', '-').toLowerCase()}.pdf`;
+      const nomeArquivo = `programacao-igreja-3colunas.pdf`;
 
       let htmlPDF = `
         <div class="pdf-container">
           <div class="pdf-header">
             <img src="logo.png" alt="Logo Igreja" class="pdf-logo">
-            <h1 class="pdf-titulo">Programação do Mês</h1>
-            <p class="pdf-subtitulo">${mesAtual}</p>
+            <h1 class="pdf-titulo">Programação da Igreja</h1>
+            <p class="pdf-subtitulo">Próximos Eventos</p>
           </div>
       `;
 
       const datasOrdenadas = Object.keys(eventosMes).sort();
       if (datasOrdenadas.length === 0) {
-        htmlPDF += '<p style="text-align: center; color: #5f6368; padding: 40px;">Nenhum evento programado para este mês</p>';
+        htmlPDF += '<p style="text-align: center; color: #5f6368; padding: 40px;">Nenhum evento futuro cadastrado</p>';
       } else {
-        datasOrdenadas.forEach((data, index) => {
-          const evento = eventosMes[data];
+        let mesAtualGrupo = '';
+        let contadorCor = 0;
+        let eventosDoMes = [];
+
+        datasOrdenadas.forEach((data) => {
+          const eventos = eventosMes[data];
           const [ano, mes, dia] = data.split('-');
           const dataObj = new Date(ano, mes - 1, dia);
-          const dataFormatada = dataObj.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
-          const corCard = cores[index % 3];
+          const nomeMes = dataObj.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
 
-          htmlPDF += `
-            <div class="pdf-card ${corCard}">
-              <div class="pdf-card-data">${dataFormatada}</div>
-              <div class="pdf-card-titulo">${evento.titulo}</div>
-              ${evento.descricao? `<div class="pdf-card-desc">${evento.descricao}</div>` : ''}
-            </div>
-          `;
+          if (nomeMes!== mesAtualGrupo) {
+            // Fecha grid anterior se existir
+            if (eventosDoMes.length > 0) {
+              htmlPDF += '</div>';
+            }
+            mesAtualGrupo = nomeMes;
+            htmlPDF += `<h2 class="pdf-mes-titulo">${nomeMes}</h2>`;
+            htmlPDF += '<div class="pdf-grid">';
+            eventosDoMes = [];
+          }
+
+          const dataFormatada = dataObj.toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric' });
+
+          eventos.forEach((evento, index) => {
+            const corCard = cores[contadorCor % 3];
+            contadorCor++;
+            eventosDoMes.push(evento);
+            htmlPDF += `
+              <div class="pdf-card ${corCard}">
+                <div class="pdf-card-data">${dataFormatada} ${evento.horario? `- ${evento.horario}` : ''}</div>
+                <div class="pdf-card-titulo">${evento.titulo}</div>
+                ${evento.descricao? `<div class="pdf-card-desc">${evento.descricao}</div>` : ''}
+              </div>
+            `;
+          });
         });
+
+        // Fecha último grid
+        if (eventosDoMes.length > 0) {
+          htmlPDF += '</div>';
+        }
       }
 
       htmlPDF += '</div>';
@@ -470,8 +532,9 @@
       const mes = dataAtual.getMonth();
       document.getElementById('mes-ano').textContent = new Date(ano, mes).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
 
-      const inicioMes = `${ano}-${String(mes + 1).padStart(2, '0')}-01`;
-      const fimMes = `${ano}-${String(mes + 1).padStart(2, '0')}-31`;
+      const hoje = new Date();
+      const hojeStr = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}`;
+
       const eventosRef = ref(db, 'eventos');
       const snapshot = await get(eventosRef);
       eventosMes = {};
@@ -479,8 +542,13 @@
       if (snapshot.exists()) {
         const todosEventos = snapshot.val();
         Object.keys(todosEventos).forEach(data => {
-          if (data >= inicioMes && data <= fimMes) {
-            eventosMes[data] = todosEventos[data];
+          // PEGA TUDO DE HOJE PRA FRENTE
+          if (data >= hojeStr) {
+            if (todosEventos[data].titulo) {
+              eventosMes[data] = [todosEventos[data]];
+            } else {
+              eventosMes[data] = Object.values(todosEventos[data]);
+            }
           }
         });
       }
@@ -524,13 +592,16 @@
           div.classList.add('hoje');
         }
 
-        if (eventosMes[dataStr]) {
+        if (eventosMes[dataStr] && eventosMes[dataStr].length > 0) {
           div.classList.add('tem-evento');
           const titulo = document.createElement('div');
           titulo.className = 'dia-titulo';
-          titulo.textContent = eventosMes[dataStr].titulo;
+          titulo.textContent = eventosMes[dataStr][0].titulo;
+          if (eventosMes[dataStr].length > 1) {
+            titulo.innerHTML += ` <span class="badge">+${eventosMes[dataStr].length - 1}</span>`;
+          }
           div.appendChild(titulo);
-          div.onclick = () => abrirModal(dataStr);
+          div.onclick = () => abrirModal(dataStr, 0);
         }
 
         calendario.appendChild(div);
@@ -543,36 +614,52 @@
 
       const datasOrdenadas = Object.keys(eventosMes).sort();
       if (datasOrdenadas.length === 0) {
-        lista.innerHTML = '<p style="color: #5f6368; text-align: center; padding: 20px;">Nenhum evento este mês</p>';
+        lista.innerHTML = '<p style="color: #5f6368; text-align: center; padding: 20px;">Nenhum evento futuro cadastrado</p>';
         return;
       }
 
+      let mesAtualGrupo = '';
       datasOrdenadas.forEach(data => {
-        const evento = eventosMes[data];
+        const eventos = eventosMes[data];
         const [ano, mes, dia] = data.split('-');
-        const dataFormatada = `${dia}/${mes}/${ano}`;
+        const dataObj = new Date(ano, mes - 1, dia);
+        const nomeMes = dataObj.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
 
-        const div = document.createElement('div');
-        div.className = 'evento-item';
-        div.innerHTML = `
-          <div class="evento-info">
-            <h4>${evento.titulo}</h4>
-            <p><strong>Data:</strong> ${dataFormatada}</p>
-            ${evento.descricao? `<p>${evento.descricao}</p>` : ''}
-          </div>
-          <div class="evento-acoes">
-            <button class="btn" onclick="abrirModal('${data}')">✏️ Editar</button>
-            <button class="btn btn-danger" onclick="excluirEventoDireto('${data}')">🗑️ Excluir</button>
-          </div>
-        `;
-        lista.appendChild(div);
+        if (nomeMes!== mesAtualGrupo) {
+          mesAtualGrupo = nomeMes;
+          const tituloMes = document.createElement('h4');
+          tituloMes.className = 'titulo-mes-lista';
+          tituloMes.textContent = nomeMes;
+          lista.appendChild(tituloMes);
+        }
+
+        const dataFormatada = dataObj.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+
+        eventos.forEach((evento, index) => {
+          const div = document.createElement('div');
+          div.className = 'evento-item';
+          div.innerHTML = `
+            <div class="evento-info">
+              <h4>${evento.titulo}</h4>
+              <p><strong>Data:</strong> ${dataFormatada} ${evento.horario? `- ${evento.horario}` : ''}</p>
+              ${evento.descricao? `<p>${evento.descricao}</p>` : ''}
+            </div>
+            <div class="evento-acoes">
+              <button class="btn" onclick="abrirModal('${data}', ${index})">✏️ Editar</button>
+              <button class="btn btn-danger" onclick="excluirEventoDireto('${data}', ${index})">🗑️ Excluir</button>
+            </div>
+          `;
+          lista.appendChild(div);
+        });
       });
     }
 
-    window.abrirModal = (data) => {
-      const evento = eventosMes[data];
+    window.abrirModal = (data, index = 0) => {
+      const evento = eventosMes[data][index];
       document.getElementById('edit-data-original').value = data;
+      document.getElementById('edit-index').value = index;
       document.getElementById('edit-data').value = data;
+      document.getElementById('edit-horario').value = evento.horario || '';
       document.getElementById('edit-titulo').value = evento.titulo;
       document.getElementById('edit-descricao').value = evento.descricao || '';
       document.getElementById('modalEvento').style.display = 'block';
@@ -584,6 +671,7 @@
 
     window.salvarEvento = async () => {
       const data = document.getElementById('data').value;
+      const horario = document.getElementById('horario').value;
       const titulo = document.getElementById('titulo').value;
       const descricao = document.getElementById('descricao').value;
 
@@ -592,10 +680,32 @@
         return;
       }
 
-      await set(ref(db, `eventos/${data}`), {
-        titulo, descricao,
+      const novoEvento = {
+        titulo, descricao, horario,
         timestamp: Date.now()
-      });
+      };
+
+      // Se já tem evento nesse dia, adiciona na lista
+      const eventosDiaRef = ref(db, `eventos/${data}`);
+      const snapshot = await get(eventosDiaRef);
+
+      if (snapshot.exists()) {
+        const eventosExistentes = snapshot.val();
+        if (eventosExistentes.titulo) {
+          // Só tinha 1 evento, vira array
+          await set(ref(db, `eventos/${data}`), {
+            0: eventosExistentes,
+            1: novoEvento
+          });
+        } else {
+          // Já é array, adiciona
+          const proximoIndex = Object.keys(eventosExistentes).length;
+          await set(ref(db, `eventos/${data}/${proximoIndex}`), novoEvento);
+        }
+      } else {
+        // Primeiro evento do dia
+        await set(ref(db, `eventos/${data}`), novoEvento);
+      }
 
       alert('Evento cadastrado!');
       limparForm();
@@ -604,7 +714,9 @@
 
     window.atualizarEvento = async () => {
       const dataOriginal = document.getElementById('edit-data-original').value;
+      const index = parseInt(document.getElementById('edit-index').value);
       const dataNova = document.getElementById('edit-data').value;
+      const horario = document.getElementById('edit-horario').value;
       const titulo = document.getElementById('edit-titulo').value;
       const descricao = document.getElementById('edit-descricao').value;
 
@@ -613,14 +725,68 @@
         return;
       }
 
-      if (dataOriginal!== dataNova) {
-        await remove(ref(db, `eventos/${dataOriginal}`));
-      }
-
-      await set(ref(db, `eventos/${dataNova}`), {
-        titulo, descricao,
+      const eventoAtualizado = {
+        titulo, descricao, horario,
         timestamp: Date.now()
-      });
+      };
+
+      // Pega os eventos do dia original
+      const eventosDiaOrigemRef = ref(db, `eventos/${dataOriginal}`);
+      const snapshot = await get(eventosDiaOrigemRef);
+      const eventosDiaOrigem = snapshot.val();
+
+      // Se mudou a data, remove do dia antigo e adiciona no novo
+      if (dataOriginal!== dataNova) {
+        // Remove do dia original
+        if (eventosDiaOrigem.titulo) {
+          // Era evento único, remove o dia todo
+          await remove(ref(db, `eventos/${dataOriginal}`));
+        } else {
+          // Era array, remove só o index
+          await remove(ref(db, `eventos/${dataOriginal}/${index}`));
+
+          // Se sobrou só 1 evento, converte de array pra objeto
+          const snapshotRestante = await get(eventosDiaOrigemRef);
+          if (snapshotRestante.exists()) {
+            const restantes = snapshotRestante.val();
+            const keys = Object.keys(restantes);
+            if (keys.length === 1) {
+              await set(eventosDiaOrigemRef, restantes[keys[0]]);
+            }
+          }
+        }
+
+        // Adiciona no novo dia
+        const eventosDiaDestinoRef = ref(db, `eventos/${dataNova}`);
+        const snapshotDestino = await get(eventosDiaDestinoRef);
+
+        if (snapshotDestino.exists()) {
+          const eventosExistentes = snapshotDestino.val();
+          if (eventosExistentes.titulo) {
+            // Só tinha 1 evento, vira array
+            await set(eventosDiaDestinoRef, {
+              0: eventosExistentes,
+              1: eventoAtualizado
+            });
+          } else {
+            // Já é array, adiciona no final
+            const proximoIndex = Object.keys(eventosExistentes).length;
+            await set(ref(db, `eventos/${dataNova}/${proximoIndex}`), eventoAtualizado);
+          }
+        } else {
+          // Primeiro evento do dia
+          await set(eventosDiaDestinoRef, eventoAtualizado);
+        }
+      } else {
+        // Mesma data, só atualiza
+        if (eventosDiaOrigem.titulo) {
+          // Era evento único
+          await set(eventosDiaOrigemRef, eventoAtualizado);
+        } else {
+          // Era array, atualiza o index específico
+          await set(ref(db, `eventos/${dataNova}/${index}`), eventoAtualizado);
+        }
+      }
 
       alert('Evento atualizado!');
       fecharModal();
@@ -629,17 +795,30 @@
 
     window.excluirEvento = async () => {
       const data = document.getElementById('edit-data-original').value;
-      if (confirm('Tem certeza que quer excluir este evento?')) {
-        await remove(ref(db, `eventos/${data}`));
-        alert('Evento excluído!');
-        fecharModal();
-        carregarCalendario();
-      }
+      const index = parseInt(document.getElementById('edit-index').value);
+      await excluirEventoDireto(data, index);
+      fecharModal();
     };
 
-    window.excluirEventoDireto = async (data) => {
+    window.excluirEventoDireto = async (data, index = 0) => {
       if (confirm('Tem certeza que quer excluir este evento?')) {
-        await remove(ref(db, `eventos/${data}`));
+        const eventosDia = eventosMes[data];
+        if (eventosDia.length === 1) {
+          await remove(ref(db, `eventos/${data}`));
+        } else {
+          await remove(ref(db, `eventos/${data}/${index}`));
+
+          // Se sobrou só 1, converte pra objeto
+          const eventosDiaRef = ref(db, `eventos/${data}`);
+          const snapshot = await get(eventosDiaRef);
+          if (snapshot.exists()) {
+            const restantes = snapshot.val();
+            const keys = Object.keys(restantes);
+            if (keys.length === 1) {
+              await set(eventosDiaRef, restantes[keys[0]]);
+            }
+          }
+        }
         alert('Evento excluído!');
         carregarCalendario();
       }
@@ -647,6 +826,7 @@
 
     function limparForm() {
       document.getElementById('data').value = '';
+      document.getElementById('horario').value = '';
       document.getElementById('titulo').value = '';
       document.getElementById('descricao').value = '';
     }
