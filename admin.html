@@ -314,8 +314,13 @@
     <!-- LOGIN -->
     <div id="login" class="login-box">
       <h1>Login Admin</h1>
-      <input type="email" id="email" placeholder="Email" value="pastor@iobpczs.com">
-      <input type="password" id="senha" placeholder="Senha">
+      <input type="email" id="email" placeholder="Email">
+
+      <div style="position: relative;">
+        <input type="password" id="senha" placeholder="Senha" style="padding-right: 45px;">
+        <span onclick="toggleSenha()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 20px; user-select: none;">👁️</span>
+      </div>
+
       <button class="btn" onclick="fazerLogin()">Entrar</button>
       <p id="erro-login" style="color: red; margin-top: 10px;"></p>
     </div>
@@ -331,7 +336,7 @@
       <div class="acoes-admin">
         <button class="btn btn-success" onclick="scrollToForm()">➕ Evento</button>
         <button class="btn btn-outline" onclick="abrirComoMembro()">👁️ Membro</button>
-        <button class="btn btn-pdf" onclick="gerarPDF()">📄 GERAR PDF</button>
+        <button class="btn btn-pdf" onclick="gerarPDF()">📄 PDF 3 Colunas</button>
       </div>
 
       <div class="nav-mes">
@@ -420,6 +425,12 @@
         document.getElementById('painel').classList.add('hidden');
       }
     });
+
+    window.toggleSenha = () => {
+      const senhaInput = document.getElementById('senha');
+      const tipo = senhaInput.getAttribute('type') === 'password'? 'text' : 'password';
+      senhaInput.setAttribute('type', tipo);
+    };
 
     window.fazerLogin = async () => {
       const email = document.getElementById('email').value;
